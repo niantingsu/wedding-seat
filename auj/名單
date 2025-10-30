@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>仕豪 & 翊庭 婚禮座位查詢</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap');
+
+  body {
+    font-family: "Noto Sans TC", "微軟正黑體", sans-serif;
+    background: linear-gradient(135deg, #ffe6f0, #fff6f9);
+    color: #5c3a3a;
+    text-align: center;
+    padding: 40px;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  h1 {
+    color: #d17a7a;
+    font-size: 2.2em;
+    margin-bottom: 20px;
+  }
+
+  p {
+    margin: 5px 0;
+  }
+
+  input {
+    padding: 10px;
+    font-size: 1em;
+    width: 60%;
+    border: 2px solid #f4b8c1;
+    border-radius: 8px;
+    background: #fff;
+    outline: none;
+    transition: 0.3s;
+  }
+
+  input:focus {
+    border-color: #e89dac;
+    box-shadow: 0 0 5px #f8cdd6;
+  }
+
+  button {
+    background-color: #f4b8c1;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin-left: 10px;
+    font-size: 1em;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  button:hover {
+    background-color: #e89dac;
+  }
+
+  .result {
+    margin-top: 30px;
+    font-size: 1.2em;
+    color: #5c3a3a;
+  }
+
+  .card {
+    display: inline-block;
+    background: #fff;
+    border-radius: 16px;
+    padding: 20px 30px;
+    margin-top: 20px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    border: 2px solid #f6d1db;
+  }
+
+  .footer {
+    margin-top: 40px;
+    font-size: 0.9em;
+    color: #c47a91;
+  }
+
+  /* 花瓣飄落效果 */
+  .petal {
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    background: #fcd1da;
+    border-radius: 50%;
+    opacity: 0.8;
+    animation-name: fall;
+    animation-duration: 6s;
+    animation-iteration-count: infinite;
+  }
+
+  @keyframes fall {
+    0% { transform: translateY(-50px) rotate(0deg); opacity: 0.8;}
+    100% { transform: translateY(110vh) rotate(360deg); opacity: 0;}
+  }
+</style>
+</head>
+<body>
+
+<h1>💒 仕豪 & 翊庭 幸福座位查詢</h1>
+<p>請輸入您的姓名（需與名單相同）</p>
+<input type="text" id="nameInput" placeholder="例如：蘇秀榮">
+<button onclick="searchSeat()">查詢</button>
+
+<div class="result" id="result"></div>
+
+<div class="footer">祝您用餐愉快，幸福滿滿、永結同心 💕</div>
+
+<script>
+  // 產生花瓣
+  for(let i=0;i<30;i++){
+    const petal = document.createElement('div');
+    petal.className='petal';
+    petal.style.left = Math.random()*100 + 'vw';
+    petal.style.animationDelay = Math.random()*5 + 's';
+    petal.style.width = petal.style.height = (10+Math.random()*10)+'px';
+    document.body.appendChild(petal);
+  }
+
+  const guestList = {
+    "葛西安": "第二桌(女方親友)",
+    "蘇秀榮": "第二桌(女方親友)",
+    "蘇進福": "第二桌(女方親友)",
+    "張嘉惠": "第二桌(女方親友)",
+    "葛嘉玲": "第二桌(女方親友)",
+    "蘇連富": "第二桌(女方親友)",
+    "蘇連進": "第三桌(女方親友)",
+    "蘇長妹": "第三桌(女方親友)",
+    "蘇連西": "第三桌(女方親友)",
+    "蘇嬿米": "第三桌(女方親友)",
+    "蘇嬿芷": "第三桌(女方親友)",
+    "洪惠萍": "第三桌(女方親友)",
+    "蘇金龍": "第四桌(女方親友)",
+    "蘇金章": "第四桌(女方親友)",
+    "蘇金雄": "第四桌(女方親友)",
+    "李霆豪": "第四桌(女方親友)",
+    "張賢明": "第四桌(女方親友)",
+    "郭清福": "第四桌(女方親友)",
+    "高秀真": "第五桌(女方親友)",
+    "胡文斌": "第五桌(女方親友)",
+    "林春美": "第五桌(女方親友)",
+    "蘇瑛琦": "第五桌(女方親友)",
+    "李秋蓮": "第五桌(女方親友)",
+    "田馨": "第五桌(女方親友)",
+    "陳裔璿": "第六桌(摯友情誼桌)",
+    "潘秋月": "第六桌(摯友情誼桌)",
+    "彭士航": "第六桌(摯友情誼桌)",
+    "盧建宏": "第六桌(摯友情誼桌)",
+    "蔡竟佳": "第六桌(摯友情誼桌)",
+    "梁敏倫": "第六桌(摯友情誼桌)",
+    "高逸庭": "第六桌(摯友情誼桌)",
+    "張宇勝": "第六桌(摯友情誼桌)",
+    "劉心惠": "第六桌(摯友情誼桌)",
+    "姜雅娥": "第七桌(白衣天使桌)",
+    "胡申言": "第七桌(白衣天使桌)",
+    "張倫信": "第七桌(白衣天使桌)",
+    "劉淑梅": "第七桌(白衣天使桌)",
+    "王琬資": "第七桌(白衣天使桌)",
+    "林素真": "第七桌(白衣天使桌)",
+    "洪珮玲": "第七桌(白衣天使桌)",
+    "李偉慈": "第七桌(白衣天使桌)",
+    "林倩雯": "第七桌(白衣天使桌)",
+    "李文轅": "第八桌(女方親友)",
+    "李文軒": "第八桌(女方親友)",
+    "劉光照": "第八桌(女方親友)",
+    "黃愛蘭": "第八桌(女方親友)",
+    "黃愛妹": "第八桌(女方親友)",
+    "洪明德": "第八桌(女方親友)",
+    "胡小龍": "第八桌(女方親友)",
+    "賴馬政": "第九桌(女方親友)",
+    "許萬金": "第九桌(女方親友)",
+    "林愛玉": "第九桌(女方親友)",
+    "蘇勵明": "第九桌(女方親友)",
+    "林琪": "第九桌(女方親友)",
+    "林慧玲": "第十桌(女方親友)",
+    "陳淑枝": "第十桌(女方親友)",
+    "涂貞珍": "第十桌(女方親友)",
+    "王美花": "第十桌(女方親友)",
+    "鍾月英": "第十桌(女方親友)",
+    "伊勺牧師": "第十一桌(清溪教會)",
+    "哈尤牧師": "第十一桌(清溪教會)",
+    "賴光榮": "第十一桌(清溪教會)",
+    "王惠貞": "第十一桌(清溪教會)",
+    "王獻斌": "第十一桌(清溪教會
